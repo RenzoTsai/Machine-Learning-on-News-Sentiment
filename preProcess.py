@@ -30,7 +30,7 @@ def loadData(train_filePath,label_filePath):
 if __name__ =='__main__':
 	trainData=loadData('Train/Train_DataSet_Label.csv','Train/Train_DataSet.csv')
 	trainData.to_csv('Train/preprocessed_train_data.csv')
-	test= 'https://myappple.comshu.cn/cn/123 3413 (id:1001蔡润泽)okthen'
+	test= 'https://myapple.coms.cn/cn/123 3413 (id:1001蔡润泽)okthen'
 	deleteNoneSense(test)
 	print(test)
 
