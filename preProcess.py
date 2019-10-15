@@ -36,6 +36,7 @@ if __name__ =='__main__':
 	trainData=loadData('Train/Train_DataSet_Label.csv','Train/Train_DataSet.csv')
 	trainData.to_csv('Train/preprocessed_train_data.csv')
 
+
 	test = "(微信)《fine》(hhh123)\nhao this is a htttp: https://blog.csdn.net/hawkzy/article/details/85110213 (id:1001蔡润泽)okthen ►"
 	test = deleteNoneSense(test)
 
