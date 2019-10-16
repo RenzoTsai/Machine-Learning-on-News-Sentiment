@@ -40,24 +40,6 @@ if __name__ =='__main__':
 	cut_Test_Data = cutData('Test/Test_DataSet.csv')
 	cut_Test_Data.to_csv('Test/result.csv')
 
-	# stop_words = get_custom_stopwords('ChineseStopWords.txt')
-	# trainData= cutData
-	# X = trainData['cuted_content']
-	# y = trainData.label
-	# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=20191016)
-	# Vectorizer = CountVectorizer( max_df = 0.8,
- #                            	  min_df = 3,
- #                            	  token_pattern = u'(?u)\\b[^\\d\\W]\\w+\\b',
- #                                  stop_words =frozenset(stop_words) )
-	# test = pd.DataFrame(Vectorizer.fit_transform(X_train).toarray(), columns=Vectorizer.get_feature_names())
-	# print(test.head())
-
-	# nb = MultinomialNB()
-	# X_train_vect = Vectorizer.fit_transform(X_train)
-	# nb.fit(X_train_vect, y_train)
-	# train_score = nb.score(X_train_vect, y_train)
-	# print(train_score)
-
 	# print(trainData['label'].unique())
 	# seg_list = jieba.cut("我爱自然语言处理", cut_all=False)   
 	# print(" ".join(seg_list))
