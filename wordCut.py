@@ -30,7 +30,7 @@ def cut_char(text):
 def cutData(filePath):
 	cutData = pd.read_csv(filePath,index_col=0)
 	cutData['content'] = pd.DataFrame(cutData['content'].astype(str))	
-	cutData['cuted_content'] = cutData['content'].apply(lambda x: cut_char(x))
+	cutData['content'] = cutData['content'].apply(lambda x: cut_char(x))
 	print(cutData.head())
 	return cutData
 
@@ -38,8 +38,12 @@ def cutData(filePath):
 if __name__ =='__main__':
 	jieba.load_userdict('dict.txt')
 	jieba.enable_parallel(2)
-	cutData = cutData('Train/preprocessed_train_data.csv')
-	cutData.to_csv('Train/preprocessed_train_data.csv')
+	print("Processing: cutting train data...")
+	cut_Train_Data = cutData('Train/preprocessed_train_data.csv')
+	cut_Train_Data.to_csv('Train/preprocessed_train_data.csv')
+	print("Processing: cutting test data...")
+	cut_Test_Data = cutData('Test/Test_DataSet.csv')
+	cut_Test_Data.to_csv('Test/result.csv')
 
 	# stop_words = get_custom_stopwords('ChineseStopWords.txt')
 	# trainData= cutData
