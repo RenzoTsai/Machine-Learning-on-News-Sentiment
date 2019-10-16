@@ -24,10 +24,10 @@ if __name__ =='__main__':
 	#Start to train model(content)
 	X = trainData['content'].astype('U')
 	y = trainData.label
-	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=2019)
+	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=2019)
 
 	Vectorizer = CountVectorizer( max_df = 0.75,
-                            	  min_df = 3,
+                            	  min_df = 2,
                             	  token_pattern = u'(?u)\\b[^\\d\\W]\\w+\\b',
                                   stop_words =frozenset(stop_words) )
 	test = pd.DataFrame(Vectorizer.fit_transform(X_train).toarray(), columns=Vectorizer.get_feature_names())
@@ -55,8 +55,8 @@ if __name__ =='__main__':
 	#Start to train model(title)
 	X = trainData['title'].astype('U')
 	y = trainData.label
-	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=2019)
-	Vectorizer_Title = CountVectorizer( max_df = 0.95,
+	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=2019)
+	Vectorizer_Title = CountVectorizer( max_df = 0.8,
                             	  min_df = 2,
                             	  token_pattern = u'(?u)\\b[^\\d\\W]\\w+\\b',
                                   stop_words =frozenset(stop_words) )
