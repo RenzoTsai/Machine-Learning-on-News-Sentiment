@@ -8,13 +8,6 @@ from sklearn.naive_bayes import MultinomialNB
 # from sklearn.model_selection import train_test_split
 import re
 
-def snow_result(comment):
-    s = SnowNLP(comment)
-    if s.sentiments >= 0.5:
-        return 1
-    else:
-        return 0
-
 def get_custom_stopwords(stop_words_file):
     with open(stop_words_file) as sw:
         stopwords = sw.read()
