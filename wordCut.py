@@ -1,6 +1,9 @@
 import pandas as pd
 import jieba
 import gensim
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import MultinomialNB
 # from snownlp import SnowNLP
 # from sklearn.model_selection import train_test_split
 import re
@@ -12,6 +15,14 @@ def snow_result(comment):
     else:
         return 0
 
+def get_custom_stopwords(stop_words_file):
+    with open(stop_words_file) as sw:
+        stopwords = sw.read()
+    stopwords_list = stopwords.split('\n')
+    custom_stopwords_list = [i for i in stopwords_list]
+    return custom_stopwords_list 
+
+
 def cut_char(text):
 	#print("processing cutting")
 	return ("/".join(jieba.cut(text)))
@@ -19,7 +30,7 @@ def cut_char(text):
 def cutData(filePath):
 	cutData = pd.read_csv(filePath,index_col=0)
 	cutData['content'] = pd.DataFrame(cutData['content'].astype(str))	
-	cutData['cuted_words'] = cutData['content'].apply(lambda x: cut_char(x))
+	cutData['cuted_content'] = cutData['content'].apply(lambda x: cut_char(x))
 	print(cutData.head())
 	return cutData
 
@@ -29,6 +40,25 @@ if __name__ =='__main__':
 	jieba.enable_parallel(2)
 	cutData = cutData('Train/preprocessed_train_data.csv')
 	cutData.to_csv('Train/preprocessed_train_data.csv')
+
+	# stop_words = get_custom_stopwords('ChineseStopWords.txt')
+	# trainData= cutData
+	# X = trainData['cuted_content']
+	# y = trainData.label
+	# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=20191016)
+	# Vectorizer = CountVectorizer( max_df = 0.8,
+ #                            	  min_df = 3,
+ #                            	  token_pattern = u'(?u)\\b[^\\d\\W]\\w+\\b',
+ #                                  stop_words =frozenset(stop_words) )
+	# test = pd.DataFrame(Vectorizer.fit_transform(X_train).toarray(), columns=Vectorizer.get_feature_names())
+	# print(test.head())
+
+	# nb = MultinomialNB()
+	# X_train_vect = Vectorizer.fit_transform(X_train)
+	# nb.fit(X_train_vect, y_train)
+	# train_score = nb.score(X_train_vect, y_train)
+	# print(train_score)
+
 	# print(trainData['label'].unique())
 	# seg_list = jieba.cut("我爱自然语言处理", cut_all=False)   
 	# print(" ".join(seg_list))
