@@ -29,6 +29,8 @@ def cut_char(text):
 
 def cutData(filePath):
 	cutData = pd.read_csv(filePath,index_col=0)
+	cutData['title'] = pd.DataFrame(cutData['title'].astype(str))	
+	cutData['title'] = cutData['title'].apply(lambda x: cut_char(x))
 	cutData['content'] = pd.DataFrame(cutData['content'].astype(str))	
 	cutData['content'] = cutData['content'].apply(lambda x: cut_char(x))
 	print(cutData.head())
