@@ -1,4 +1,3 @@
-from sklearn.model_selection import train_test_split 
 import pandas as pd
 import re
 
@@ -19,6 +18,7 @@ def deleteNoneSense(text):
 	text  = re.sub(others,'',text)
 	text  = re.sub(r'\s','',text)
 	text  = re.sub(src,'',text)
+	text = re.sub("[\s+\.\!\/_,$%^*(+\"\']+|[+——！，。？、~@#￥%……&*（）]+", "",text)
 	return text
 
 
@@ -37,7 +37,7 @@ def loadData(train_filePath,label_filePath):
 if __name__ =='__main__':
 	trainData=loadData('Train/Train_DataSet_Label.csv','Train/Train_DataSet.csv')
 	trainData.to_csv('Train/preprocessed_train_data.csv')
-	print("labels: ",trainData['label'].unique())
+	print(trainData.head())
 	
 	# test = "(微信)《fine》(hhh123)\\nhao this is a http: https://blog.csdn.net/hawkzy/article/details/85110213 (id:1001蔡润泽)如果我后面还有)12okthen ►750px;\"\"/>图片:/home/alidata/www/data/tmp/qfupload/4_291085_1514981471478952.jpg 施全军实名举报50天后，上黄镇党委政府回复如下图： =750) window.open(\'http://img.jsly001.com/attachment/mon_1801/4_291085_a9b11b7ea2b1ce9.jpg?90');\"\" onload=\"\"if(this.offsetwidth>\'750\')this.width='750';\"\" src=\"\"http://img.jsly001.com/attachment/mon_1801/4_291085_a9b11b7ea2b1ce9.jpg?90\"\" style=\"\"max-width:750px;\"\"/>图片:/home/alidata/www/data/tmp/qfupload/4_291085_1514981472631668.jpg =750) 如果我中间有window.open(\'http://img.jsly001.com/attachment/mon_1801/4_291085_9cde9b3943fe20c.jpg?75'); 好的呢么"
 	# test = deleteNoneSense(test)
