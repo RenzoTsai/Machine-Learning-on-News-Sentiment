@@ -53,6 +53,10 @@ if __name__ =='__main__':
 
 	y_predict = nb.predict(Vectorizer.transform(X_test))
 	print("content test macro f1_score:",sklearn.metrics.f1_score(y_test, y_predict, average='macro')) 
+	#查看混淆矩阵 
+	from sklearn.metrics import confusion_matrix
+	cm = confusion_matrix(y_test, y_predict)
+	print(cm)
 
 	print("Apply to Test Data...")
 	testData = pd.read_csv('Test/result.csv',index_col=0)
@@ -82,7 +86,11 @@ if __name__ =='__main__':
 	print("title test score is : ", clf.score(X_test_vect, y_test))
 
 	y_predict = clf.predict(Vectorizer.transform(X_test))
-	print("title test macro f1_score:",sklearn.metrics.f1_score(y_test, y_predict, average='macro'))  
+	print("title test macro f1_score:",sklearn.metrics.f1_score(y_test, y_predict, average='macro'))
+	#查看混淆矩阵  
+	from sklearn.metrics import confusion_matrix
+	cm = confusion_matrix(y_test, y_predict)
+	print(cm)
 
 
 	print("Apply to Test Data...")
