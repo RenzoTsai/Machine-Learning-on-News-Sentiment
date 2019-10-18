@@ -1,7 +1,10 @@
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
+from sklearn.svm import LinearSVC
+from sklearn.svm import SVC
 import sklearn
 import csv
 #import matplotlib.pyplot as plt
@@ -24,12 +27,18 @@ if __name__ =='__main__':
 	#Start to train model(content)
 	X = trainData['content'].astype('U')
 	y = trainData.label
-	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=2019)
+	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=2019)
 
-	Vectorizer = CountVectorizer( max_df = 0.75,
+	Vectorizer = CountVectorizer( max_df = 0.8,
                             	  min_df = 2,
                             	  token_pattern = u'(?u)\\b[^\\d\\W]\\w+\\b',
                                   stop_words =frozenset(stop_words) )
+
+	Vectorizer_Title = CountVectorizer( max_df = 0.8,
+                            	  min_df = 3,
+                            	  token_pattern = u'(?u)\\b[^\\d\\W]\\w+\\b',
+                                  stop_words =frozenset(stop_words) )
+
 	test = pd.DataFrame(Vectorizer.fit_transform(X_train).toarray(), columns=Vectorizer.get_feature_names())
 	print(test.head())
 
@@ -56,32 +65,29 @@ if __name__ =='__main__':
 	X = trainData['title'].astype('U')
 	y = trainData.label
 	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=2019)
-	Vectorizer_Title = CountVectorizer( max_df = 0.8,
-                            	  min_df = 2,
-                            	  token_pattern = u'(?u)\\b[^\\d\\W]\\w+\\b',
-                                  stop_words =frozenset(stop_words) )
-	test = pd.DataFrame(Vectorizer_Title.fit_transform(X_train).toarray(), columns=Vectorizer_Title.get_feature_names())
+	
+	test = pd.DataFrame(Vectorizer.fit_transform(X_train).toarray(), columns=Vectorizer.get_feature_names())
 	print(test.head())
 
-	nb = MultinomialNB()
-	X_train_vect = Vectorizer_Title.fit_transform(X_train)
-	print(Vectorizer_Title.fit_transform(X_train))
-	nb.fit(X_train_vect, y_train)
-	train_score = nb.score(X_train_vect, y_train)
+	clf = MultinomialNB()
+	X_train_vect = Vectorizer.fit_transform(X_train)
+	print(Vectorizer.fit_transform(X_train))
+	clf.fit(X_train_vect, y_train)
+	train_score = clf.score(X_train_vect, y_train)
 	
 	print("title train score is : ",train_score)
 
 
-	X_test_vect = Vectorizer_Title.transform(X_test)
-	print("title test score is : ", nb.score(X_test_vect, y_test))
+	X_test_vect = Vectorizer.transform(X_test)
+	print("title test score is : ", clf.score(X_test_vect, y_test))
 
-	y_predict = nb.predict(Vectorizer_Title.transform(X_test))
+	y_predict = clf.predict(Vectorizer.transform(X_test))
 	print("title test macro f1_score:",sklearn.metrics.f1_score(y_test, y_predict, average='macro'))  
 
 
 	print("Apply to Test Data...")
 
-	testResult = nb.predict(Vectorizer_Title.transform(testData['title'].astype('U')))
+	testResult = clf.predict(Vectorizer.transform(testData['title'].astype('U')))
 
 
 	testData['label_title'] = testResult
@@ -89,8 +95,5 @@ if __name__ =='__main__':
 
 
 	# Make final.csv
-	final_result = pd.read_csv('Test/result.csv',usecols=['id','label_content'],index_col=0)
+	final_result = pd.read_csv('Test/result.csv',usecols=['id','label_title'],index_col=0)
 	final_result.to_csv ('final_result.csv',encoding = "utf-8")
-
-
-	

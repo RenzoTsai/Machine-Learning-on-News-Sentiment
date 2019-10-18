@@ -1,11 +1,6 @@
 import pandas as pd
 import jieba
-import gensim
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.model_selection import train_test_split
-from sklearn.naive_bayes import MultinomialNB
-# from snownlp import SnowNLP
-# from sklearn.model_selection import train_test_split
+#import gensim
 import re
 
 def get_custom_stopwords(stop_words_file):
@@ -18,7 +13,7 @@ def get_custom_stopwords(stop_words_file):
 
 def cut_char(text):
 	#print("processing cutting")
-	return ("/".join(jieba.cut(text)))
+	return ("/".join(jieba.cut(text,cut_all=True)))
 
 def cutData(filePath):
 	cutData = pd.read_csv(filePath,index_col=0)
