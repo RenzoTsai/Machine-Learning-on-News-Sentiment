@@ -38,17 +38,6 @@ if __name__ =='__main__':
 	cut_Test_Data = cutData('Test/Test_DataSet.csv')
 	cut_Test_Data.to_csv('Test/result.csv')
 
-	# print(trainData['label'].unique())
-	# seg_list = jieba.cut("我爱自然语言处理", cut_all=False)   
-	# print(" ".join(seg_list))
-	# text1 = '这个一般般！'
-	# text2 = '这个太棒了！'
-	# s1 = SnowNLP(text1)
-	# s2 = SnowNLP(text2)
-	# print(s1.sentiments,s2.sentiments)
-	# trainData['snlp_result'] = trainData.content.apply(snow_result)
-	# print(trainData.snlp_result)
-
 
 	
 

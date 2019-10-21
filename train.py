@@ -130,6 +130,23 @@ if __name__ =='__main__':
 	cm = confusion_matrix(y_test, y_predict)
 	print(cm)
 
+	from sklearn import datasets
+	from sklearn.ensemble import RandomForestClassifier
+	from sklearn.model_selection import learning_curve
+	import numpy as np
+	import matplotlib.pyplot as plt
+
+	(X,y) = datasets.load_digits(return_X_y=True)
+
+	train_sizes,train_score,test_score = learning_curve(MultinomialNB(),X,y,train_sizes=[0.1,0.2,0.4,0.6,0.7,0.8,0.85,0.9,1],cv=10,scoring='accuracy')
+	train_error =  1- np.mean(train_score,axis=1)
+	test_error = 1- np.mean(test_score,axis=1)
+	plt.plot(train_sizes,train_error,'o-',color = 'r',label = 'training')
+	plt.plot(train_sizes,test_error,'o-',color = 'g',label = 'testing')
+	plt.legend(loc='best')
+	plt.xlabel('traing examples')
+	plt.ylabel('error')
+	plt.show()
 
 	print("Apply to Test Data...")
 

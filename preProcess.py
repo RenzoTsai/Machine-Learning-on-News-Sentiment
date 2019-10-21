@@ -36,13 +36,13 @@ def loadData(train_filePath,label_filePath,test_filePath):
 	trainData['content'] = trainData['content'].apply(lambda x: deleteNoneSense(x))
 	print(trainData.duplicated(subset = ['title','content']))
 	print(trainData.drop_duplicates(subset = ['title','content']))
-	trainData['combine'] = trainData['content']+30*trainData['title']
+	trainData['combine'] = trainData['content']+40*trainData['title']
 
 	testData['content'] = testData['content'].fillna('NaN')
 	testData['title']   = testData['title'].fillna('NaN')
 	testData = testData.dropna()
 	testData['content'] = testData['content'].apply(lambda x: deleteNoneSense(x))
-	testData['combine'] = testData['content']+30*testData['title']
+	testData['combine'] = testData['content']+40*testData['title']
 
 	#trainData['title'] = trainData['title'].apply(lambda x: deleteNoneSense(x))
 	return trainData,testData
@@ -54,9 +54,6 @@ if __name__ =='__main__':
 	testData.to_csv('Test/Test_DataSet.csv')
 	print(trainData.head())
 	print(testData.head())
-	# test = "(微信)《fine》(hhh123)\\nhao this is a http: https://blog.csdn.net/hawkzy/article/details/85110213 (id:1001蔡润泽)如果我后面还有)12okthen ►750px;\"\"/>图片:/home/alidata/www/data/tmp/qfupload/4_291085_1514981471478952.jpg 施全军实名举报50天后，上黄镇党委政府回复如下图： =750) window.open(\'http://img.jsly001.com/attachment/mon_1801/4_291085_a9b11b7ea2b1ce9.jpg?90');\"\" onload=\"\"if(this.offsetwidth>\'750\')this.width='750';\"\" src=\"\"http://img.jsly001.com/attachment/mon_1801/4_291085_a9b11b7ea2b1ce9.jpg?90\"\" style=\"\"max-width:750px;\"\"/>图片:/home/alidata/www/data/tmp/qfupload/4_291085_1514981472631668.jpg =750) 如果我中间有window.open(\'http://img.jsly001.com/attachment/mon_1801/4_291085_9cde9b3943fe20c.jpg?75'); 好的asbhu12a呢么"
-	# test = deleteNoneSense(test)
-	# print(test)
 	
 
 	
