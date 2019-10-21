@@ -24,6 +24,7 @@ def deleteNoneSense(text):
 	return text
 
 
+
 def loadData(train_filePath,label_filePath,test_filePath):
 	trainData = pd.read_csv(train_filePath,index_col=0)
 	labelData = pd.read_csv(label_filePath,index_col=0)
@@ -35,11 +36,14 @@ def loadData(train_filePath,label_filePath,test_filePath):
 	trainData['content'] = trainData['content'].apply(lambda x: deleteNoneSense(x))
 	print(trainData.duplicated(subset = ['title','content']))
 	print(trainData.drop_duplicates(subset = ['title','content']))
+	trainData['combine'] = trainData['content']+30*trainData['title']
 
 	testData['content'] = testData['content'].fillna('NaN')
 	testData['title']   = testData['title'].fillna('NaN')
 	testData = testData.dropna()
 	testData['content'] = testData['content'].apply(lambda x: deleteNoneSense(x))
+	testData['combine'] = testData['content']+30*testData['title']
+
 	#trainData['title'] = trainData['title'].apply(lambda x: deleteNoneSense(x))
 	return trainData,testData
 

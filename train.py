@@ -102,6 +102,45 @@ if __name__ =='__main__':
 	testData.to_csv ('Test/result.csv')
 
 
+
+	#Start to train model(combine)
+	X = trainData['combine'].astype('U')
+	y = trainData.label
+	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=2019)
+	
+	test = pd.DataFrame(Vectorizer.fit_transform(X_train).toarray(), columns=Vectorizer.get_feature_names())
+	print(test.head())
+
+	clf = MultinomialNB()
+	X_train_vect = Vectorizer.fit_transform(X_train)
+	print(Vectorizer.fit_transform(X_train))
+	clf.fit(X_train_vect, y_train)
+	train_score = clf.score(X_train_vect, y_train)
+	
+	print("title train score is : ",train_score)
+
+
+	X_test_vect = Vectorizer.transform(X_test)
+	print("title test score is : ", clf.score(X_test_vect, y_test))
+
+	y_predict = clf.predict(Vectorizer.transform(X_test))
+	print("title test macro f1_score:",sklearn.metrics.f1_score(y_test, y_predict, average='macro'))
+	#查看混淆矩阵  
+	from sklearn.metrics import confusion_matrix
+	cm = confusion_matrix(y_test, y_predict)
+	print(cm)
+
+
+	print("Apply to Test Data...")
+
+	testResult = clf.predict(Vectorizer.transform(testData['combine'].astype('U')))
+
+
+	testData['label_combine'] = testResult
+	testData.to_csv ('Test/result.csv')
+
+
+
 	# Make final.csv
-	final_result = pd.read_csv('Test/result.csv',usecols=['id','label_title'],index_col=0)
-	final_result.to_csv ('final_result.csv',encoding = "utf-8")
+	final_result = pd.read_csv('Test/result.csv',usecols=['id','label_combine'],index_col=0)
+	final_result.to_csv ('灭世之瓜天上来_final.csv',encoding = "utf-8")

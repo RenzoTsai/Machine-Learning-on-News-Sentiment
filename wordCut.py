@@ -21,6 +21,9 @@ def cutData(filePath):
 	cutData['title'] = cutData['title'].apply(lambda x: cut_char(x))
 	cutData['content'] = pd.DataFrame(cutData['content'].astype(str))	
 	cutData['content'] = cutData['content'].apply(lambda x: cut_char(x))
+	#cutData['combine'] = cutData['content']+20*cutData['title']
+	cutData['combine'] = pd.DataFrame(cutData['combine'].astype(str))	
+	cutData['combine'] = cutData['combine'].apply(lambda x: cut_char(x))
 	print(cutData.head())
 	return cutData
 
