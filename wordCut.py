@@ -14,6 +14,7 @@ def get_custom_stopwords(stop_words_file):
 def cut_char(text):
 	#print("processing cutting")
 	return ("/".join(jieba.cut(text,cut_all=True)))
+	#return ("/".join(jieba.cut_for_search(text)))
 
 def cutData(filePath):
 	cutData = pd.read_csv(filePath,index_col=0)
@@ -21,9 +22,9 @@ def cutData(filePath):
 	cutData['title'] = cutData['title'].apply(lambda x: cut_char(x))
 	cutData['content'] = pd.DataFrame(cutData['content'].astype(str))	
 	cutData['content'] = cutData['content'].apply(lambda x: cut_char(x))
-	#cutData['combine'] = cutData['content']+20*cutData['title']
-	cutData['combine'] = pd.DataFrame(cutData['combine'].astype(str))	
-	cutData['combine'] = cutData['combine'].apply(lambda x: cut_char(x))
+	cutData['combine'] = cutData['content']+'/'+70*(cutData['title']+'/')
+	#cutData['combine'] = pd.DataFrame(cutData['combine'].astype(str))	
+	#cutData['combine'] = cutData['combine'].apply(lambda x: cut_char(x))
 	print(cutData.head())
 	return cutData
 
@@ -35,7 +36,7 @@ if __name__ =='__main__':
 	cut_Train_Data = cutData('Train/preprocessed_train_data.csv')
 	cut_Train_Data.to_csv('Train/preprocessed_train_data.csv')
 	print("Processing: cutting test data...")
-	cut_Test_Data = cutData('Test/Test_DataSet.csv')
+	cut_Test_Data = cutData('Test/Test_DataSet_P.csv')
 	cut_Test_Data.to_csv('Test/result.csv')
 
 

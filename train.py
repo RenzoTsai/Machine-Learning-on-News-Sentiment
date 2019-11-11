@@ -32,7 +32,8 @@ if __name__ =='__main__':
 	Vectorizer = CountVectorizer( max_df = 0.8,
                             	  min_df = 2,
                             	  token_pattern = u'(?u)\\b[^\\d\\W]\\w+\\b',
-                                  stop_words =frozenset(stop_words) )
+                                  stop_words =frozenset(stop_words) 
+                                  )
 
 	Vectorizer_Title = CountVectorizer( max_df = 0.8,
                             	  min_df = 3,
@@ -99,7 +100,7 @@ if __name__ =='__main__':
 
 
 	testData['label_title'] = testResult
-	testData.to_csv ('Test/result.csv')
+	#testData.to_csv ('Test/result.csv')
 
 
 
@@ -130,23 +131,22 @@ if __name__ =='__main__':
 	cm = confusion_matrix(y_test, y_predict)
 	print(cm)
 
-	from sklearn import datasets
-	from sklearn.ensemble import RandomForestClassifier
-	from sklearn.model_selection import learning_curve
-	import numpy as np
-	import matplotlib.pyplot as plt
+	# from sklearn import datasets
+	# from sklearn.model_selection import learning_curve
+	# import numpy as np
+	# import matplotlib.pyplot as plt
 
-	(X,y) = datasets.load_digits(return_X_y=True)
+	# (X,y) = datasets.load_digits(return_X_y=True)
 
-	train_sizes,train_score,test_score = learning_curve(MultinomialNB(),X,y,train_sizes=[0.1,0.2,0.4,0.6,0.7,0.8,0.85,0.9,1],cv=10,scoring='accuracy')
-	train_error =  1- np.mean(train_score,axis=1)
-	test_error = 1- np.mean(test_score,axis=1)
-	plt.plot(train_sizes,train_error,'o-',color = 'r',label = 'training')
-	plt.plot(train_sizes,test_error,'o-',color = 'g',label = 'testing')
-	plt.legend(loc='best')
-	plt.xlabel('traing examples')
-	plt.ylabel('error')
-	plt.show()
+	# train_sizes,train_score,test_score = learning_curve(MultinomialNB(),X,y,train_sizes=[0.1,0.2,0.4,0.6,0.7,0.8,0.85,0.9,1],cv=10,scoring='accuracy')
+	# train_error =  1- np.mean(train_score,axis=1)
+	# test_error = 1- np.mean(test_score,axis=1)
+	# plt.plot(train_sizes,train_error,'o-',color = 'r',label = 'training')
+	# plt.plot(train_sizes,test_error,'o-',color = 'g',label = 'testing')
+	# plt.legend(loc='best')
+	# plt.xlabel('traing examples')
+	# plt.ylabel('error')
+	# plt.show()
 
 	print("Apply to Test Data...")
 
@@ -159,5 +159,8 @@ if __name__ =='__main__':
 
 
 	# Make final.csv
+	final_result = pd.read_csv('Test/result.csv',usecols=['title','content','label_combine','label_content','label_title'],index_col=0)
+	final_result.to_csv ('final.csv',encoding = "utf-8")
+
 	final_result = pd.read_csv('Test/result.csv',usecols=['id','label_combine'],index_col=0)
 	final_result.to_csv ('灭世之瓜天上来_final.csv',encoding = "utf-8")

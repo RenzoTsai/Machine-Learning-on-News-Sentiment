@@ -1,6 +1,6 @@
 import pandas as pd
 import re
-
+import jieba
 def deleteNoneSense(text):
 	html  = re.compile('<.*?>')
 	http  = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
@@ -30,31 +30,26 @@ def loadData(train_filePath,label_filePath,test_filePath):
 	labelData = pd.read_csv(label_filePath,index_col=0)
 	testData  = pd.read_csv(test_filePath,index_col=0)
 	trainData = trainData.merge(labelData, on='id', how='left')
-	# trainData['content'] = trainData['content'].fillna('NaN')
-	# trainData['title']   = trainData['title'].fillna('NaN')
 	trainData = trainData.dropna()
 	trainData['content'] = trainData['content'].apply(lambda x: deleteNoneSense(x))
+
 	print(trainData.duplicated(subset = ['title','content']))
 	print(trainData.drop_duplicates(subset = ['title','content']))
-	trainData['combine'] = trainData['content']+40*trainData['title']
 
 	testData['content'] = testData['content'].fillna('NaN')
 	testData['title']   = testData['title'].fillna('NaN')
 	testData = testData.dropna()
 	testData['content'] = testData['content'].apply(lambda x: deleteNoneSense(x))
-	testData['combine'] = testData['content']+40*testData['title']
 
-	#trainData['title'] = trainData['title'].apply(lambda x: deleteNoneSense(x))
 	return trainData,testData
 
 
 if __name__ =='__main__':
 	trainData,testData=loadData('Train/Train_DataSet_Label.csv','Train/Train_DataSet.csv','Test/Test_DataSet.csv')
 	trainData.to_csv('Train/preprocessed_train_data.csv')
-	testData.to_csv('Test/Test_DataSet.csv')
+	testData.to_csv('Test/Test_DataSet_P.csv')
 	print(trainData.head())
 	print(testData.head())
-	
 
 	
 
