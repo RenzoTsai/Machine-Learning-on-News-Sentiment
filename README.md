@@ -1,3 +1,6 @@
-# Machine-Learning-Assignment
-# #库要求 ：
-需要安装numpy / pandas / jieba / gensim / tensorflow / matplotlib
+# Machine-Learning-on-News-Sentiment
+# #Needs ：
+  numpy / pandas / jieba / matplotlib
+  
+# # How to Run:
+preProcess.py -> wordCut.py -> train.py
