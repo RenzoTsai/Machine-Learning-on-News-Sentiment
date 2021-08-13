@@ -1,6 +1,6 @@
 # Machine-Learning-on-News-Sentiment
-# #Needs ：
+## Needs ：
   numpy / pandas / jieba / matplotlib
   
-# # How to Run:
+## How to Run:
 preProcess.py -> wordCut.py -> train.py
